@@ -7,8 +7,6 @@
 //Programmer: Elliott DuCharme
 ///////////////////////////////////////////////////////////////////////
 //Comments: Created on Tuesday, January 19, 2021 8:45 AM.
-//Could try and have something where it keeps track of numbers it's
-// already guessed so it doesn't guess them again??
 ///////////////////////////////////////////////////////////////////////
 #include <stdio.h>
 #include <time.h>
