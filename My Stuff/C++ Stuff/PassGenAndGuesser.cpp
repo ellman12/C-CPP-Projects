@@ -1,29 +1,25 @@
+//Program used for generating random passwords, and then testing how long it takes for the PC to guess said password.
 #include <iostream>
 #include <vector>
 #include <string>
 #include <time.h>
 using namespace std;
 
-static const char alphanum[] =
-    "0123456789"
-    "abcdefghijklmnopqrstuvwxyz"
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 //Sources:
 //http://www.cplusplus.com/forum/general/130902/
+//https://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c
 
 //TODO: guesser function can be given the length or not
-//TODO: https://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c
 
 string generatePassword(int length, bool useNumbers, bool useLowerCase, bool useUpperCase, bool printUsableChars)
 {
     if (useNumbers == false && useLowerCase == false && useUpperCase == false)
     {
-        printf("At least 1 of them need to be true :/\n");
+        printf("ERROR. Parameters 2, 3, and/or 4 need to be true :/\n");
         exit(EXIT_FAILURE);
     }
 
-    vector<char> usableChars; //What chars can be in the password
+    vector<char> usableChars; //What chars can be in the password. USe vector for easy resizing
     string password;
 
     if (useNumbers)
@@ -51,15 +47,15 @@ string generatePassword(int length, bool useNumbers, bool useLowerCase, bool use
             std::cout << usableChars.at(i) << ' ';
     }
 
-    for (int i = 0; i < length; i++)
-        password += alphanum[rand() % (sizeof(alphanum) - 1)];
+    for (int i = 0; i < length; i++) //Fill the password string with chars
+        password += usableChars[rand() % usableChars.size()];
 
     return password;
 }
 
 int main()
 {
-    srand(time(0));
+    srand(time(0)); //Yes I know rand is bad
     const int maxLength = 40;
     int x = rand() % maxLength;
 
