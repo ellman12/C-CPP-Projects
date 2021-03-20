@@ -1,20 +1,14 @@
 //Program used for generating random passwords, and then testing how long it takes for the PC to guess said password.
+//Programmer: Elliott DuCharme
+//Environment: VSCode on Windows with the g++ compiler
 #include <iostream>
 #include <vector>
-#include <string>
 #include <time.h>
 using namespace std;
 
 //Sources:
 //http://www.cplusplus.com/forum/general/130902/
 //https://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c
-
-//TODO:
-//guesser function can be given the length or not
-void guessPassword()
-{
-
-}
 
 int genRandNum(int min, int max)
 {
@@ -113,6 +107,15 @@ string generatePassword(int length, int useNumbers, int useLowerCase, int useUpp
         password += usableChars[rand() % usableChars.size()];
 
     return password;
+}
+
+//TODO:
+//guesser function can be given the length or not
+//use vector to store guesses
+//enable/disable things like PC knowing password length, which bools are true, etc.
+void guessPassword()
+{
+
 }
 
 int main()
