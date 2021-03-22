@@ -20,7 +20,7 @@ string generatePassword(int length, int useNumbers, int useLowerCase, int useUpp
 {
     if (useNumbers == false && useLowerCase == false && useUpperCase == false && useSpecialChars == false)
     {
-        printf("ERROR. At least one of parameters 2, 3, 4, and/or 5 needs to be true :/\n");
+        printf("generatePassword() ERROR. At least one of parameters 2, 3, 4, and/or 5 needs to be true :/\n");
         exit(EXIT_FAILURE);
     }
 
@@ -113,16 +113,39 @@ string generatePassword(int length, int useNumbers, int useLowerCase, int useUpp
 //guesser function can be given the length or not
 //use vector to store guesses
 //enable/disable things like PC knowing password length, which bools are true, etc.
-void guessPassword()
+//Computer tries to guess a password.
+void guessPassword(string password2Guess, int length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars)
 {
+    vector<string> guessesdPasswords;
+    string passwordGuess;
+    int guessAttempts = 0;
 
+    do
+    {
+        passwordGuess = generatePassword(length, useNumbers, useLowerCase, useUpperCase, useSpecialChars, printUsableChars);
+        printf("Guessing %s\t%d attempts\n", passwordGuess, guessAttempts++);
+        // guessesdPasswords.push_back(passwordGuess);
+    } while (passwordGuess != password2Guess);
+
+    if (passwordGuess == password2Guess)
+    {
+        printf("The computer guessed the password after %d attempts!\n", guessAttempts);
+        printf("(Debugging) Computer's guess: %s\tYour parameter: %s\n", passwordGuess, password2Guess);
+    }
 }
 
 int main()
 {
     srand(time(0)); //Yes, I know rand is bad, especially for something like this.
-    int length = genRandNum(1, 300);
+    // int length = genRandNum(1, 300);
+    int length = 13;
+    char input;
 
     string password = generatePassword(length, true, true, true, true, false);
     cout << "\n\nPassword of length " << length << " is: " << password << "\n\n\n";
+
+    printf("Guessing time!\n");
+    printf("Enter any char to proceed\n>");
+    scanf("%c", &input);
+    guessPassword(password, length, true, true, true, true, false);
 }
