@@ -3,6 +3,7 @@
 //Environment: VSCode on Windows with the g++ compiler
 #include <iostream>
 #include <vector>
+#include <algorithm> //Used for finding guessed passwords in the vector
 #include <time.h>
 using namespace std;
 
@@ -113,42 +114,55 @@ string generatePassword(int length, int useNumbers, int useLowerCase, int useUpp
 
 //TODO:
 //guesser function can be given the length or not
-//use vector to store guesses
 //enable/disable things like PC knowing password length, which bools are true, etc.
+
 //Computer tries to guess a password.
 void guessPassword(string correctPassword, int length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars)
 {
     vector<string> guessesdPasswords;
     string passwordGuess;
-    int guessAttempts = 0;
+    int guessAttempts = 1;
 
     do
     {
         passwordGuess = generatePassword(length, useNumbers, useLowerCase, useUpperCase, useSpecialChars, printUsableChars);
-        cout << "Guessing password: " << passwordGuess << "\t"
-             << "Attempts: " << guessAttempts++ << endl;
-        // guessesdPasswords.push_back(passwordGuess); //TODO
+        cout << "Guessing password: " << passwordGuess << "\t" << "Attempts: " << guessAttempts << "\t";
+
+        if (find(guessesdPasswords.begin(), guessesdPasswords.end(), passwordGuess) != guessesdPasswords.end())
+            cout << "\tPassword " << passwordGuess << " is already in the vector" << endl;
+        else
+        {
+            guessesdPasswords.push_back(passwordGuess);
+            guessAttempts++;
+            printf("\n");
+        }
+
     } while (passwordGuess != correctPassword);
 
-    if (passwordGuess == correctPassword)
-    {
-        cout << "The computer guessed the password after " << guessAttempts << " attempts!" << endl;
-        cout << "(Debugging) Computer's guess: " << passwordGuess << "\tYour paramater: " << correctPassword << endl;
-    }
+    cout << "\nThe computer guessed the password " << passwordGuess << " after " << --guessAttempts << " attempts!\n" << endl;
 }
 
 int main(int argc, char *argv[])
 {
+    if (atoi(argv[2]))
+        cout << "Using numbers" << endl;
+    if (atoi(argv[3]))
+        cout << "Using lower case" << endl;
+    if (atoi(argv[4]))
+        cout << "Using UPPER CASE" << endl;
+    if (atoi(argv[5]))
+        cout << "Using special chars" << endl;
+
     srand(time(0)); //Yes, I know rand is bad, especially for something like this.
+
     int length = atoi(argv[1]);
     char input; //Just used for the hit enter thing
 
-    //                  int length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars
     string password = generatePassword(length, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), atoi(argv[6])); //Command line args make for easier testing
-    cout << "\n\nPassword of length " << password.size() << " is: \"" << password << "\"\n\n\n";
+    cout << "\nPassword of length " << password.size() << " is: " << password << "\n\n";
 
-    printf("Guessing time!\n");
-    printf("Hit enter to proceed\n>");
+    printf("Hit enter to begin the guessing\n>");
     scanf("%c", &input);
+
     guessPassword(password, length, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), false);
 }
