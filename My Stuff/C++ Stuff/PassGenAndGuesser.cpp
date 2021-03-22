@@ -144,6 +144,12 @@ void guessPassword(string correctPassword, int length, int useNumbers, int useLo
 
 int main(int argc, char *argv[])
 {
+    if (argc < 7)
+    {
+        printf("Please enter these 7 command line args:\nint length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars, (optional) string yourOwnPassword (instead of the program creating its own)");
+        return -1;
+    }
+
     if (atoi(argv[2]))
         cout << "Using numbers" << endl;
     if (atoi(argv[3]))
@@ -155,10 +161,15 @@ int main(int argc, char *argv[])
 
     srand(time(0)); //Yes, I know rand is bad, especially for something like this.
 
-    int length = atoi(argv[1]);
     char input; //Just used for the hit enter thing
+    int length = atoi(argv[1]);
+    string password;
 
-    string password = generatePassword(length, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), atoi(argv[6])); //Command line args make for easier testing
+    if (argv[7] == NULL) //User can choose their own password
+        password = generatePassword(length, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), atoi(argv[6])); //Command line args make for easier testing
+    else
+        password = argv[7];
+
     cout << "\nPassword of length " << password.size() << " is: " << password << "\n\n";
 
     printf("Hit enter to begin the guessing\n>");
