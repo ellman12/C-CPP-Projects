@@ -1,6 +1,7 @@
 //Program used for generating random passwords, and then testing how long it takes for the PC to guess said password.
 //Programmer: Elliott DuCharme
 //Environment: VSCode on Windows with the g++ compiler
+//WARNING: fairly intensive on your CPU!
 #include <iostream>
 #include <vector>
 #include <algorithm> //Used for finding guessed passwords in the vector
