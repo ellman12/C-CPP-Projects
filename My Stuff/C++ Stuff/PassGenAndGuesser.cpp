@@ -11,8 +11,6 @@ using namespace std;
 //http://www.cplusplus.com/forum/general/130902/
 //https://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c
 
-//TODO: vector thing
-
 int genRandNum(int min, int max)
 {
     return rand() % (max + 1 - min) + min;
