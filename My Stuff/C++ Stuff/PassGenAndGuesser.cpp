@@ -113,6 +113,7 @@ string generatePassword(int length, int useNumbers, int useLowerCase, int useUpp
 //TODO:
 //guesser function can be given the length or not
 //enable/disable things like PC knowing password length, which bools are true, etc.
+//make vector optional
 
 //Computer tries to guess a password.
 void guessPassword(string correctPassword, int length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars)
