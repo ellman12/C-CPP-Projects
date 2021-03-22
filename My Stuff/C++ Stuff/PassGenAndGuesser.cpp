@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
     int length = atoi(argv[1]);
     string password;
 
-    if (argv[7] == NULL) //User can choose their own password
+    if (argv[7] == NULL) //User can choose their own password. It's the last (and also optional) command line arg. If it's blank, generate random password.
         password = generatePassword(length, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), atoi(argv[6])); //Command line args make for easier testing
     else
         password = argv[7];
