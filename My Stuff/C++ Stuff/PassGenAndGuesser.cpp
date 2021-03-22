@@ -10,6 +10,8 @@ using namespace std;
 //http://www.cplusplus.com/forum/general/130902/
 //https://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c
 
+//TODO: vector thing
+
 int genRandNum(int min, int max)
 {
     return rand() % (max + 1 - min) + min;
@@ -39,7 +41,7 @@ string generatePassword(int length, int useNumbers, int useLowerCase, int useUpp
     if (useSpecialChars == -1)
         printf("useSpecialChars specified as -1. Generating randomly if using or not (0 or 1): %d\n", useSpecialChars = rand() % 2);
 
-    vector<char> usableChars; //What chars can be in the password. USe vector for ease of use.
+    vector<char> usableChars; //What chars can be in the password. Use vector for ease of use.
     string password;
 
     if (useNumbers)
@@ -114,7 +116,7 @@ string generatePassword(int length, int useNumbers, int useLowerCase, int useUpp
 //use vector to store guesses
 //enable/disable things like PC knowing password length, which bools are true, etc.
 //Computer tries to guess a password.
-void guessPassword(string password2Guess, int length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars)
+void guessPassword(string correctPassword, int length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars)
 {
     vector<string> guessesdPasswords;
     string passwordGuess;
@@ -123,29 +125,30 @@ void guessPassword(string password2Guess, int length, int useNumbers, int useLow
     do
     {
         passwordGuess = generatePassword(length, useNumbers, useLowerCase, useUpperCase, useSpecialChars, printUsableChars);
-        printf("Guessing %s\t%d attempts\n", passwordGuess, guessAttempts++);
-        // guessesdPasswords.push_back(passwordGuess);
-    } while (passwordGuess != password2Guess);
+        cout << "Guessing password: " << passwordGuess << "\t"
+             << "Attempts: " << guessAttempts++ << endl;
+        // guessesdPasswords.push_back(passwordGuess); //TODO
+    } while (passwordGuess != correctPassword);
 
-    if (passwordGuess == password2Guess)
+    if (passwordGuess == correctPassword)
     {
-        printf("The computer guessed the password after %d attempts!\n", guessAttempts);
-        printf("(Debugging) Computer's guess: %s\tYour parameter: %s\n", passwordGuess, password2Guess);
+        cout << "The computer guessed the password after " << guessAttempts << " attempts!" << endl;
+        cout << "(Debugging) Computer's guess: " << passwordGuess << "\tYour paramater: " << correctPassword << endl;
     }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     srand(time(0)); //Yes, I know rand is bad, especially for something like this.
-    // int length = genRandNum(1, 300);
-    int length = 13;
-    char input;
+    int length = atoi(argv[1]);
+    char input; //Just used for the hit enter thing
 
-    string password = generatePassword(length, true, true, true, true, false);
-    cout << "\n\nPassword of length " << length << " is: " << password << "\n\n\n";
+    //                  int length, int useNumbers, int useLowerCase, int useUpperCase, int useSpecialChars, int printUsableChars
+    string password = generatePassword(length, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), atoi(argv[6])); //Command line args make for easier testing
+    cout << "\n\nPassword of length " << password.size() << " is: \"" << password << "\"\n\n\n";
 
     printf("Guessing time!\n");
-    printf("Enter any char to proceed\n>");
+    printf("Hit enter to proceed\n>");
     scanf("%c", &input);
-    guessPassword(password, length, true, true, true, true, false);
+    guessPassword(password, length, atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), false);
 }
